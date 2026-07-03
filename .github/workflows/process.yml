@@ -17,18 +17,13 @@ jobs:
         with:
           node-version: 18
 
-      # 👇 ادخل إلى مجلد backend
       - name: Install dependencies
         working-directory: backend
         run: npm install
 
-      # 👇 تشغيل السكربت من نفس المجلد
       - name: Run processor
         working-directory: backend
         run: node run.js
         env:
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
-          FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
-          FIREBASE_CLIENT_EMAIL: ${{ secrets.FIREBASE_CLIENT_EMAIL }}
-          FIREBASE_PRIVATE_KEY: ${{ secrets.FIREBASE_PRIVATE_KEY }}
           GITHUB_REPO: ${{ github.repository }}
