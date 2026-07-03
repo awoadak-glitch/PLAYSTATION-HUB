@@ -1,1 +1,17 @@
-
+[
+  {
+    "id": "gow",
+    "title": "God of War Ragnarök",
+    "image": "assets/gow.jpg"
+  },
+  {
+    "id": "ghost",
+    "title": "Ghost of Tsushima",
+    "image": "assets/ghost.jpg"
+  },
+  {
+    "id": "elden",
+    "title": "Elden Ring",
+    "image": "assets/elden.jpg"
+  }
+]
