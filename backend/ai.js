@@ -5,7 +5,7 @@ export async function analyzeGame(imageUrl, apiKey) {
     const res = await axios.post(
       "https://openrouter.ai/api/v1/chat/completions",
       {
-        model: "qwen/qwen2.5-vl-7b-instruct:free",
+        model: "google/gemini-1.5-flash",
         messages: [
           {
             role: "user",
