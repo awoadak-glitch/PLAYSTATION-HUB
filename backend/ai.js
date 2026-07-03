@@ -5,7 +5,7 @@ export async function analyzeGame(imageUrl, apiKey) {
     const res = await axios.post(
       "https://openrouter.ai/api/v1/chat/completions",
       {
-        model: "google/gemini-1.5-flash",
+        model: "mistralai/mistral-small-3.1-24b-instruct:free",
         messages: [
           {
             role: "user",
