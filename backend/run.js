@@ -25,19 +25,15 @@ for (const file of files) {
     const res = await axios.post(
       "https://openrouter.ai/api/v1/chat/completions",
       {
-        model: "meta-llama/llama-3.1-8b-instruct",
+        model: "meta-llama/llama-3.3-8b-instruct:free",
         messages: [
           {
             role: "user",
             content: `
-أنت خبير ألعاب.
-
-اسم اللعبة هو: ${id}
-
-أرجع JSON فقط:
+أعد JSON فقط بدون أي شرح أو markdown:
 
 {
-  "title": "",
+  "title": "${id}",
   "description": "",
   "story": "",
   "genres": [],
@@ -58,15 +54,17 @@ for (const file of files) {
       }
     );
 
-    const text = res.data.choices[0].message.content;
+    let text = res.data.choices[0].message.content;
 
-    let data;
-    try {
-      data = JSON.parse(text);
-    } catch {
-      console.log("JSON ERROR:", text);
-      continue;
-    }
+    console.log("AI RAW:", text);
+
+    // 🔥 تنظيف أي markdown أو رموز
+    text = text
+      .replace(/```json/g, "")
+      .replace(/```/g, "")
+      .trim();
+
+    const data = JSON.parse(text);
 
     const imageUrl =
       `https://raw.githubusercontent.com/${process.env.GITHUB_REPO}/main/posters/${file}`;
@@ -78,15 +76,16 @@ for (const file of files) {
       createdAt: Date.now()
     };
 
-    fs.writeFileSync(
-      `${gamesDir}/${id}.json`,
-      JSON.stringify(finalData, null, 2)
-    );
+    const outPath = `${gamesDir}/${id}.json`;
+
+    fs.writeFileSync(outPath, JSON.stringify(finalData, null, 2));
+
+    console.log("Saved:", outPath);
 
     processed[id] = true;
     fs.writeFileSync(processedFile, JSON.stringify(processed, null, 2));
 
   } catch (err) {
-    console.log("Error processing:", id, err.response?.data || err.message);
+    console.log("ERROR:", id, err.response?.data || err.message);
   }
 }
