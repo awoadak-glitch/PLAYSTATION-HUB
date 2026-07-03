@@ -12,10 +12,19 @@ export async function analyzeGame(imageUrl, apiKey) {
             {
               type: "text",
               text: `
-حلل لعبة من الصورة وأرجع JSON فقط:
+حلل الصورة وأعد JSON فقط بدون أي شرح:
 
-title, description, story, genre, age_rating, platform, developer, publisher
-              `
+{
+  "title": "",
+  "description": "",
+  "story": "",
+  "genres": [],
+  "age_rating": "",
+  "platforms": [],
+  "developer": "",
+  "publisher": ""
+}
+`
             },
             {
               type: "image_url",
@@ -27,7 +36,8 @@ title, description, story, genre, age_rating, platform, developer, publisher
     },
     {
       headers: {
-        Authorization: `Bearer ${apiKey}`
+        Authorization: `Bearer ${apiKey}`,
+        "Content-Type": "application/json"
       }
     }
   );
