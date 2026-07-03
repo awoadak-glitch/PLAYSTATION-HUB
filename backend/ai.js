@@ -4,7 +4,7 @@ export async function analyzeGame(imageUrl, apiKey) {
   const res = await axios.post(
     "https://openrouter.ai/api/v1/chat/completions",
     {
-      model: "meta-llama/llama-3.1-8b-instruct:free",
+      model: "meta-llama/llama-3.2-11b-vision-instruct:free",
       messages: [
         {
           role: "user",
