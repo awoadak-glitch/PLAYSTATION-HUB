@@ -2,17 +2,14 @@ let games = [];
 
 const container = document.getElementById("games");
 
-// Skeleton Loading
-container.innerHTML = Array(6).fill(`
-  <div class="skeleton"></div>
-`).join("");
+async function loadGames() {
+  container.innerHTML = "";
 
-fetch("data/games.json")
-  .then(res => res.json())
-  .then(data => {
-    games = data;
-    render(games);
-  });
+  const res = await fetch("../games/index.json");
+  games = await res.json();
+
+  render(games);
+}
 
 function render(list) {
   container.innerHTML = "";
@@ -31,8 +28,9 @@ function openGame(id) {
   window.location.href = "game.html?id=" + id;
 }
 
-// Search (instant)
 document.getElementById("search").addEventListener("input", (e) => {
   const v = e.target.value.toLowerCase();
   render(games.filter(g => g.title.toLowerCase().includes(v)));
 });
+
+loadGames();
